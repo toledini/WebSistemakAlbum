@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta name="tipo_contenido" content="width=device-width, initial-scale=1" http-equiv="content-type" charset="utf-8">
+	<title>Login</title>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='stylesPWS/wide.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (max-width: 480px)'
+		   href='stylesPWS/smartphone.css' />
+	<script type="text/javascript" language="JavaScript">
+				function balidatu(){
+			var errorea="";
+			var betetzear ="";
+			var frm=document.getElementById("sartu");
+			for(i=0;i<frm.elements.length;i++){
+				if(frm.elements[i].name == "eposta" || frm.elements[i].name == "pasahitza"){
+					if(frm.elements[i].value.trim()==""){
+						errorea +=" | "+ frm.elements[i].name;
+					}else{
+						if(frm.elements[i].name == "eposta"){
+							if(!checkEmail(frm.elements[i].value.trim())){
+								betetzear += frm.elements[i].name + " okerra (ad. jiparsar003@ikasle.ehu.eus).\n" ;
+							}
+						}
+						if(frm.elements[i].name == "pasahitza"){
+							if(!checkPass(frm.elements[i].value.trim())){
+								betetzear += "pasahitzak 6 karaktere baina gutxiago ditu\n" ;
+								betetzear += "Gogoratu pasahitzak ondoko ezaugarriak bete behar dituela:\n" ;
+								betetzear += "- Maiuskulaz, minuskulaz edo digituz betea edo hiruren arteko konbinaketa\n" ;
+								betetzear += "- Ez du espazio txuririk izan behar\n" ;
+							}
+						}
+					}
+				}
+			}
+			if(errorea!= "" || betetzear != ""){
+				alert("Bete beharreko gakoak:\n\n   "  +errorea + " |\n\n Gaizki dauden elementuak:\n\n   "+betetzear+"\n");
+			}
+		}
+		
+		function checkPass(balioa){
+			expresioa = RegExp(/^[a-zA-Z0-9]{6,}$/);
+			if(expresioa.test(balioa)){
+				return true;
+			}
+			return false;
+		}
+
+		function checkEmail(balioa){
+			expresioa = RegExp(/^[a-z]+[0-9]{3}@(ikasle\.)?ehu\.(es|eus)$/);
+			if(expresioa.test(balioa)){
+				return true;
+			}
+			return false;
+		}
+		
+  </script>
+</head>
+<body>
+
+    <h2>
+      <img src="http://lh5.ggpht.com/-IF_6MPyj5j0/Tvw21H7gFBI/AAAAAAAAD_4/lP_NpWG7-vg/s9000/Ghostbusters2_logo.png" class="image" width="50" length="50">
+      Hasi saioa:
+    </h2>
+    <form id="sartu" name="sartu" method="post" action="SignIn.php" onSubmit="return balidatu()" enctype="multipart/form-data">
+      <div><input class="mainLoginInput" type="text" name="eposta" placeholder="&#61447; jarruarte007@ikasle.ehu.eus" /><br/></div>
+      <div><input class="mainLoginInput" type="password" name="pasahitza" placeholder="&#61475;"/><br/></div>
+      <div><input type="submit" name="submit" value="Login" />
+	  <input type="reset" name="reset "value="Reset" class="btn"><br/></div>
+
+    </form>
+	  Pasahitza ahaztu duzu? <span class="right"><a href="pasahitzaBerreskuratu.php">Pasahitza berria</a> </span><br/>
+      Erregistratu gabe? <span class="right"><a href="signUpBerria.html">SignUp</a> </span><br/>
+	 <span><a href='layout.html'><img src="http://www.freeiconspng.com/uploads/icones-png-theme-home-19.png" alt="atzera" width="50" height="50" align="left"></a></span>
+
+</body>
+
+</html>
