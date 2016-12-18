@@ -16,8 +16,8 @@
 </html>
 <?php
 
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
@@ -47,7 +47,6 @@
 	$abizena2 = $_POST['abizena2'];
 	$posta = $_POST['eposta'];
 	$pass = $_POST['pasahitza'];
-	$tik = $_POST['tiketa'];
 	$tel = $_POST['telefonoa'];
 	$interes = $_POST['interesak'];
 	
