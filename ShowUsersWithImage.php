@@ -17,8 +17,8 @@
 <?php 
 	
 
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");	
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");	
 		
 	if($niremysql->connect_errno) {
 		die( "Konexioan errorea gertatu da: (". 
@@ -44,8 +44,8 @@
 	</tr>';	
 	
 	while($ilara = mysqli_fetch_assoc($balioak)){
-			if($ilara['EPOSTA'] != "web000@ehu.es"){
-				echo '<tr><td>'.$ilara['EPOSTA'].'</td> <td>'. $ilara['IZENA']. '</td> <td>'. $ilara['ABIZENA1']. '</td> <td>'. $ilara['ABIZENA2']. '</td> <td>'. $ilara['PASAHITZA'].'</td> <td>'. $ilara['TELEFONOA'].'</td> <td>'. $ilara['ESPEZIALITATEA'].'</td> <td>'. $ilara['INTERESAK'].'</td> <td><img src="data:image/jpeg;base64,'.base64_encode( $ilara['ARGAZKIA'] ).'" width="100" height="100"/></td> </tr>';
+			if($ilara['eposta'] != "web000@ehu.es"){
+				echo '<tr><td>'.$ilara['eposta'].'</td> <td>'. $ilara['izena']. '</td> <td>'. $ilara['abizena1']. '</td> <td>'. $ilara['abizena2']. '</td> <td>'. $ilara['pasahitza'].'</td> <td>'. $ilara['telefonoa'].'</td> <td>'. $ilara['espezialitatea'].'</td> <td>'. $ilara['interesak'].'</td> <td><img src="data:image/jpeg;base64,'.base64_encode( $ilara['argazkia'] ).'" width="100" height="100"/></td> </tr>';
 			}
 		}
 		

@@ -17,8 +17,8 @@
 <?php 
 	
 	session_start();
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 		
 	if($niremysql->connect_errno) {
 		die( "Konexioan errorea gertatu da: (". 
@@ -26,11 +26,11 @@
 		$niremysql->connect_error()	);
 	}
 		
-	$hautatu = "SELECT * FROM galderak";
+	$hautatu = "SELECT * FROM argazkiak GROUP BY eposta, albuma";
 	$balioak = $niremysql -> query ($hautatu);
 	
 	$eposta=$_SESSION['username'];
-	$mota="galdera ikusi";
+	/*$mota="argazkiaa ikusi";
 	$ordua= Date('Y-m-d H:i:s');
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -38,7 +38,7 @@
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	} else {
 		$ip = $_SERVER['REMOTE_ADDR'];
-	}
+	}*/
 
 		if(!$ident= $niremysql-> query("SELECT identifikazioa FROM konexioak WHERE eposta='$eposta' ORDER BY identifikazioa DESC LIMIT 1")){
 						die("<p>Errore bat gertatu da: ".$niremysql -> error."</p>");
@@ -46,26 +46,28 @@
 				$row = mysqli_fetch_array($ident);
 				$ident=intval($row['identifikazioa']);
 				
-				$balioa= "INSERT INTO ekintzak (konexioa, eposta, mota, ordua, ip) values ('$ident', '$eposta', '$mota','$ordua','$ip')";
+				/*$balioa= "INSERT INTO ekintzak (konexioa, eposta, mota, ordua, ip) values ('$ident', '$eposta', '$mota','$ordua','$ip')";
 				if (!$niremysql -> query($balioa)){
 					die("<p>Errore bat gertatu da: ".$niremysql -> error."</p>");
-				}
+				}*/
 		
-	echo "<h1> Galderen zerrenda </h1>";
+	echo "<h1> Argazkien zerrenda </h1>";
 	echo '<table border=1>
 	<tr>
-	<th> Galdera </th>
-	<th> Zailtasuna </th>
+	<th> Egilea </th>
+	<th> Argazkia </th>
+	<th> Deskripzioa </th>
+	<th> Albuma </th>
 	</tr>';	
 	
 	while($ilara = mysqli_fetch_assoc($balioak)){
 		if($ilara['eposta'] != "web000@ehu.es"){
-			echo '<tr><td>'.$ilara['galdera'].'</td> <td>'. $ilara['zailtasuna']. '</td></tr>';
+			echo '<tr><td>'.$ilara['eposta'].'</td> </td> <td><img src="data:image/jpeg;base64,'.base64_encode( $ilara['argazkia'] ).'" width="100" height="100"/></td> <td>'. $ilara['deskripzioa']. '</td><td>'.$ilara['albuma'].'</td></tr>';
 		}
 	}
 		
 	echo "
-			<p><a href = 'handlingQuizes.php'>Atzera</a></p>
+			<p><a href = 'albumakKudeatu.html'>Atzera</a></p>
 			<p><a href = 'layout.html'>Goazen hasierako orrira.</a></p>";
 			
 	mysqli_close($niremysql);

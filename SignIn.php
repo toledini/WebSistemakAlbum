@@ -1,8 +1,8 @@
 <?php
 
 	session_start();
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
@@ -39,9 +39,9 @@
 						}
 						$_SESSION['username'] = $eposta;
 						if($_SESSION['username'] == 'web000@ehu.es'){
-							header('Location:reviewingQuizes.php');
+							header('Location:reviewingAlbums.php');
 						}else{
-							header('Location:handlingQuizes.php');
+							header('Location:albumakKudeatu.html');
 						}
 					}else if($_SESSION['saiakerak']==3){
 						header('Location:saiakeraMaximoa.php');

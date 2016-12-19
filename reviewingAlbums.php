@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="width=device-width, initial-scale=1" http-equiv="content-type" charset="utf-8">
-	<title>reviewingQuizes</title>
+	<title>reviewingAlbums</title>
     <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -21,14 +21,14 @@
 		header('Location.html');
 		exit();
 	}
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
 	}
 	
-	$galderak = $niremysql->query("SELECT * FROM galderak");
+	$argazkiak = $niremysql->query("SELECT * FROM argazkiak");
 	
 ?>
 <html>
@@ -39,22 +39,18 @@
 				<tr>
 					<th>Identifikazioa</th>
 					<th>Eposta</th>
-					<th>Galdera</th>
-					<th>Erantzuna</th>
-					<th>Gaia</th>
-					<th>Konplexutasuna</th>
+					<th>Argazkia</th>
+					<th>Deskripzioa</th>
 				</tr>
 				<?php
 					$kopurua = 0;
-					while($ilara = mysqli_fetch_array($galderak)){
+					while($ilara = mysqli_fetch_array($argazkiak)){
 						echo "
 						<tr>
-							<td><input type='number' name='berria[]' value= '".$ilara['zenbakia']."' readonly></td>
+							<td><input type='number' name='berria[]' value= '".$ilara['id']."' readonly></td>
 							<td><input type='text' name ='berria[]' value = '".$ilara['eposta']."'readonly></td>
-							<td><textarea name ='berria[]' required>".$ilara['galdera']."</textarea></td>
-							<td><textarea name ='berria[]' required>".$ilara['erantzuna']."</textarea></td>
-							<td><input type='text' value='".$ilara['gaia']."' name ='berria[]'></td>
-							<td><input type='number' min = 0 max = 5 value ='".$ilara['zailtasuna']."' name ='berria[]'></td>
+							<td><img name ='berria[]' required>".$ilara['argazkia']."</td>
+							<td><input type='text' name ='berria[]' value='".$ilara['deskripzioa']."'></td>
 						</tr>";
 					}
 				?>

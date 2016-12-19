@@ -1,15 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="width=device-width, initial-scale=1" http-equiv="content-type" charset="utf-8">
+	<title>EnrollWithImage</title>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='stylesPWS/wide.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (max-width: 480px)'
+		   href='stylesPWS/smartphone.css' />
+</head>
+</html>
 <?php 
 
 	session_start();
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
 	}
 	$eposta=$_SESSION['username'];
-	$galderak = $niremysql -> query ("Select galdera, zailtasuna, gaia from galderak where eposta='$eposta'");
-	$mota="galdera ikusi";
+	$argazkiak = $niremysql -> query ("Select eposta,argazkia, deskripzioa, albuma from argazkiak where eposta='$eposta' GROUP BY eposta, albuma");
+	/*$mota="galdera ikusi";
 	$ordua= Date('Y-m-d H:i:s');
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -17,9 +33,9 @@
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	} else {
 		$ip = $_SERVER['REMOTE_ADDR'];
-	}
+	}*/
 
-	if(!$ident= $niremysql-> query("SELECT identifikazioa FROM konexioak WHERE eposta='$eposta' ORDER BY identifikazioa DESC LIMIT 1")){
+	/*if(!$ident= $niremysql-> query("SELECT identifikazioa FROM konexioak WHERE eposta='$eposta' ORDER BY identifikazioa DESC LIMIT 1")){
 					die("<p>Errore bat gertatu da: ".$niremysql -> error."</p>");
 			}
 			$row = mysqli_fetch_array($ident);
@@ -28,33 +44,30 @@
 			$balioa= "INSERT INTO ekintzak (konexioa, eposta, mota, ordua, ip) values ('$ident', '$eposta', '$mota','$ordua','$ip')";
 			if (!$niremysql -> query($balioa)){
 				die("<p>Errore bat gertatu da: ".$niremysql -> error."</p>");
-			}
-	$numrows = mysqli_num_rows($galderak);
+			}*/
+	$numrows = mysqli_num_rows($argazkiak);
 	if($numrows > 0){
 		
 		echo "<h1> Galderen zerrenda </h1>";		
 		echo "
 		<table border=1>
 			<tr>
-				<th>Galdera</th>
-				<th>Zailtasuna</th>
-				<th>Gaia</th>
+				<th>Argazkia</th>
+				<th>Deskripzioa</th>
+				<th>Albuma</th>
 			</tr>";
 			
-		while ($row = mysqli_fetch_assoc($galderak)){
-			echo "
-			<tr>
-				<td>".$row['galdera']."</td>
-				<td>".$row['zailtasuna']."</td>
-				<td>".$row['gaia']."</td>
-			</tr>";
+		while ($row = mysqli_fetch_assoc($argazkiak)){
+			if($row['eposta'] != "web000@ehu.es"){
+				echo '<tr> <td><img src="data:image/jpeg;base64,'.base64_encode( $row['argazkia'] ).'" width="100" height="100"/></td><td>'.$row['deskripzioa'].'</td><td>'.$row['albuma'].'</td> </tr>';
+			}
 		}
 		echo "</table>";
 	}else{
 		echo "
-		<center><p>Ez duzu txertatutako galderarik.</p></center>";
+		<center><p>Ez duzu txertatutako argazkirik.</p></center>";
 	}
 	
-	echo "<p><a href = 'handlingQuizes.php'>Segi kudeatzen galderak.</a></p>";
+	echo "<p><a href = 'albumakKudeatu.html'>Segi kudeatzen argazkiak.</a></p>";
 	
 ?>

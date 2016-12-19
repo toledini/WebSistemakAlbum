@@ -11,7 +11,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="width=device-width, initial-scale=1" http-equiv="content-type" charset="utf-8">
-	<title>Handling Quizes</title>
+	<title>Handling Albums</title>
     <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -24,28 +24,27 @@
 	
   <script type="text/javascript" language="Javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script type="text/javascript" language="Javascript">
-  //Galderak ikusteko
+  //Argazkiak ikusteko
 	$(document).ready(function(){
 		$("#ikusi").click(function(){
         $("#Ikus").load("datuakIkusi.php");
 		document.getElementById('Ikus').style.visibility="visible";
 		});
 	});
-	//Galderak txertatzeko
+	//Argazkiak txertatzeko
 	$(document).ready(function(){
 		$("#txertatu").click(function(){
-		var gald = document.getElementById('galdera').value; 
-		var eran = document.getElementById('erantzuna').value;
-		var gai = document.getElementById('gaia').value;
-		var zail = document.getElementById('zailtasuna').value; 
-		$("#Txerta").load("galderaGehitu.php",{galdera:gald, erantzuna:eran, gaia:gai, zailtasuna:zail} );
+		//var arg = document.getElementById('image').value; 
+		var des = document.getElementById('des').value;
+		var alb = document.getElementById('alb').values;
+		$("#Txerta").load("argazkiGehitu.php",{argazkia:arg, deskripzioa:des, albuma:alb} );
 		});
 	});
 	
 	Objektua = new XMLHttpRequest();
 	
-	function galderaKop(){
-		Objektua.open('POST',"galderaKop.php",true);
+	function argazkiKop(){
+		Objektua.open('POST',"argazkiKop.php",true);
 		Objektua.onreadystatechange = function(){
 			if((Objektua.readyState==4)&&(Objektua.status==200)){
 				document.getElementById('kopurua').innerHTML=Objektua.responseText;
@@ -55,35 +54,38 @@
 	}
 	setInterval(kopurua,5000);
 	
+		var irudiaIgo = function(event) {
+		var output = document.getElementById('aurrekoa');
+		output.src = URL.createObjectURL(event.target.files[0]);
+		output.style.paddingBottom="10px";
+		};
+		
+	function tamainaAldatu(irudia,altuera,zabalera){
+		irudia.height=altuera;
+		irudia.width=zabalera;
+	}
+	
   </script>
   
 </head>
-<body onload="galderaKop()">
+<body onload="argazkiKop()">
 
     <h2>
-      QUIZen kudeaketa:
+      ALBUMen kudeaketa:
     </h2>
 	
 	<form>
     
-      Galdera(*):
-	<div><textarea rows="10" cols="40" name="galdera" id="galdera" placeholder="Zein da hipertestuen transferentziarako protokoloa?" required></textarea><br/></div>
-      Erantzuna(*):
-	<div><textarea rows="10" cols="40" name="erantzuna" id="erantzuna" placeholder="HTTP" required></textarea><br/></div>
-	  Gaia(*):
-	<div><input type="text" title="gaia" name="gaia" id="gaia" placeholder="Web Sistemak" required/><br/></div>
-	  Zailtasuna:
-	<div><select name="zailtasuna" id="zailtasuna">
-		<option value=" "> </option>
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-	</select><br/></div> 
+    Albumera igo nahi den argazkia:<br/>
+	<div><input name="image" id="image" type="file" accept="image/*" onchange="irudiaIgo(event)"/><br/></div>
+	<div><img id="aurrekoa" onload="tamainaAldatu(this,125,250)"/><br/></div>
+	Deskripzioa:
+	<div><input type="text" title="des" name="des" id="des" placeholder="Mendi baten irudia"><br/></div>
+	Albuma:
+	<div><input type="text" title="alb" name="alb" id="alb" placeholder="Mendia"><br/></div>
 	</form>
-      <div><input type="button" name="txertatu" id="txertatu" value="Galdera Txertatu" />
-	  <input type="button" name="ikusi" id="ikusi" value="Galderak Ikusi" /><br/></div>
+      <div><input type="button" name="txertatu" id="txertatu" value="Argazkia Txertatu" />
+	  <input type="button" name="ikusi" id="ikusi" value="Argazkiak Ikusi" /><br/></div>
 	  
 	  
 	  <div id="Txerta" name="Txerta">
@@ -95,7 +97,7 @@
 	  <div id="kopurua" name="kopurua">
 	  </div>
 	  
-	  <div><span><a href='ShowQuestions.php'>Galdera guztiak ikusi nahi?</a></span><br/></div>
+	  <div><span><a href='ShowPhotos.php'>Argazki guztiak ikusi nahi?</a></span><br/></div>
 	
 	 <span><a href='layout.html'><img src="http://www.freeiconspng.com/uploads/icones-png-theme-home-19.png" alt="atzera" width="50" height="50" align="left"></a></span>
 

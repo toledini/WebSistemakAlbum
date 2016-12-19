@@ -1,39 +1,45 @@
 <?php
 	
 	session_start();
-	//$niremysql = new mysqli("localhost","root","","quiz");
-	$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	$niremysql = new mysqli("localhost","root","","album");
+	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
 	}
 	
 	
-	$galdera= isset($_POST["galdera"]) ? $_POST["galdera"] : '';
-	$erantzuna= isset($_POST["erantzuna"]) ? $_POST["erantzuna"] : '';
-	$gaia= isset($_POST["gaia"]) ? $_POST["gaia"] : '';
-	$zailtasun= isset($_POST["zailtasuna"]) ? $_POST["zailtasuna"] : '';
+	//$argazkia= isset($_POST["argazkia"]) ? $_POST["argazkia"] : '';
+	$deskripzioa= isset($_POST["deskripzioa"]) ? $_POST["deskripzioa"] : '';
+	$albuma= isset($_POST["albuma"]) ? $_POST["albuma"] : '';
 	
 								
-	
+	if($_FILES['image']['error']==0){
+		$file= $_FILES['image']['tmp_name'];
+		$irudia= addslashes(file_get_contents($_FILES['image']['tmp_name']));
+		$irudi_izena= addslashes($_FILES['image']['name']);
+	}else{
+		$irudia=null;
+		$irudi_izena="";
+	}
 	
 	$eposta=$_SESSION['username'];
 	
-	if($galdera==""){
-		echo("Galdera hutsa dago. <br/>");
-	}else if($erantzuna==""){
-		echo("Erantzuna hutsa dago. <br/>");
-	}else if($gaia==""){
-		echo("Gaia hutsa dago. <br/>");
+	if($irudia==""){
+		echo("Argazkia hutsa dago. <br/>");
+	}else if($deskripzioa==""){
+		echo("Deskripzioa hutsa dago. <br/>");
+	}else if($albuma==""){
+		echo("Albuma hutsa dago. <br/>");
 	}else{
-		$balioa = "INSERT INTO galderak (eposta, galdera, erantzuna,gaia ,zailtasuna) VALUES ('$eposta','$galdera','$erantzuna','$gaia','$zailtasun')"; 
+		$balioa = "INSERT INTO argazkiak (eposta, argazkia, argazki_mota,deskripzioa ,albuma) VALUES ('$eposta','$irudia','$irudi_izena','$deskripzioa','$albuma')"; 
 		if (!$niremysql -> query($balioa)){
 			die("<p>Errorea gertatu da: ".$niremysql -> error ."</p>");
 		}else{
-			echo 'Galdera zuzen sartu da ';
+			echo 'Argazkia zuzen sartu da ';
 			echo "<br>";
 		}
-		if(!$ident= $niremysql-> query("SELECT identifikazioa FROM konexioak WHERE eposta='$eposta' ORDER BY identifikazioa DESC LIMIT 1")){
+		/*if(!$ident= $niremysql-> query("SELECT identifikazioa FROM konexioak WHERE eposta='$eposta' ORDER BY identifikazioa DESC LIMIT 1")){
 			die("<p>Errore bat gertatu da: ".$niremysql -> error."</p>");
 		}
 		$row = mysqli_fetch_array($ident);
@@ -66,7 +72,7 @@
 				echo "Gaizki txertatu da XML fitxategian.";
 			}
 			
-	    }
+	    }*/
 	}
 		
 
