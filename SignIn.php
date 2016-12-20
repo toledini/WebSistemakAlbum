@@ -41,7 +41,7 @@
 						if($_SESSION['username'] == 'web000@ehu.es'){
 							header('Location:reviewingAlbums.php');
 						}else{
-							header('Location:albumakKudeatu.html');
+							header('Location:albumakKudeatu.php');
 						}
 					}else if($_SESSION['saiakerak']==3){
 						header('Location:saiakeraMaximoa.php');

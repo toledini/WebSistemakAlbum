@@ -24,7 +24,7 @@
 		printf("Konexio errorea: " . $niremysql->connect_error);
 	}
 	$eposta=$_SESSION['username'];
-	$argazkiak = $niremysql -> query ("Select eposta,argazkia, deskripzioa, albuma from argazkiak where eposta='$eposta' GROUP BY eposta, albuma");
+	$argazkiak = $niremysql -> query ("Select eposta,argazkia, deskripzioa, albuma from argazkiak where eposta='$eposta' ORDER BY albuma");
 	/*$mota="galdera ikusi";
 	$ordua= Date('Y-m-d H:i:s');
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -68,6 +68,6 @@
 		<center><p>Ez duzu txertatutako argazkirik.</p></center>";
 	}
 	
-	echo "<p><a href = 'albumakKudeatu.html'>Segi kudeatzen argazkiak.</a></p>";
+	echo "<p><a href = 'albumakKudeatu.php'>Segi kudeatzen argazkiak.</a></p>";
 	
 ?>

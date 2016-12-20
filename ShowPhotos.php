@@ -26,7 +26,7 @@
 		$niremysql->connect_error()	);
 	}
 		
-	$hautatu = "SELECT * FROM argazkiak GROUP BY eposta, albuma";
+	$hautatu = "SELECT * FROM argazkiak ORDER BY albuma";
 	$balioak = $niremysql -> query ($hautatu);
 	
 	$eposta=$_SESSION['username'];
@@ -67,7 +67,7 @@
 	}
 		
 	echo "
-			<p><a href = 'albumakKudeatu.html'>Atzera</a></p>
+			<p><a href = 'albumakKudeatu.php'>Atzera</a></p>
 			<p><a href = 'layout.html'>Goazen hasierako orrira.</a></p>";
 			
 	mysqli_close($niremysql);
