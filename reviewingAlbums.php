@@ -21,41 +21,41 @@
 		header('Location.html');
 		exit();
 	}
-	$niremysql = new mysqli("localhost","root","","album");
-	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	//$niremysql = new mysqli("localhost","root","","album");
+	$niremysql = new mysqli("mysql.hostinger.es","u642730790_tol","joantol","u642730790_album");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
 	}
 	
-	$argazkiak = $niremysql->query("SELECT * FROM argazkiak");
+	$argazkiak = $niremysql->query("SELECT * FROM argazkiak ORDER BY eposta,albuma");
+	
+	echo "<h1> Argazkien zerrenda </h1>";		
+		echo "
+		<table border=1>
+			<tr>
+				<th>Zenbakia</th>
+				<th>Egilea</th>
+				<th>Argazkia</th>
+				<th>Deskripzioa</th>
+				<th>Albuma</th>
+			</tr>";
+			
+		while ($row = mysqli_fetch_assoc($argazkiak)){
+			if($row['eposta'] != "web000@ehu.es"){
+				echo '<tr> <td>'.$row['id'].'</td><td>'.$row['eposta'].'</td><td><img src="data:image/jpeg;base64,'.base64_encode( $row['argazkia'] ).'" width="100" height="100"/></td><td>'.$row['deskripzioa'].'</td><td>'.$row['albuma'].'</td> </tr>';
+			}
+		}
+		echo "</table>";
 	
 ?>
 <html>
 <body>
 	<center>
 		<form method="post" action="treatQuestions.php">
-			<table>
-				<tr>
-					<th>Identifikazioa</th>
-					<th>Eposta</th>
-					<th>Argazkia</th>
-					<th>Deskripzioa</th>
-				</tr>
-				<?php
-					$kopurua = 0;
-					while($ilara = mysqli_fetch_array($argazkiak)){
-						echo "
-						<tr>
-							<td><input type='number' name='berria[]' value= '".$ilara['id']."' readonly></td>
-							<td><input type='text' name ='berria[]' value = '".$ilara['eposta']."'readonly></td>
-							<td><img name ='berria[]' required>".$ilara['argazkia']."</td>
-							<td><input type='text' name ='berria[]' value='".$ilara['deskripzioa']."'></td>
-						</tr>";
-					}
-				?>
-			</table><br/>
-			<button type="submit">Gorde aldaketak</button>
+			Sar ezazu ezabatu nahi duzun argazkiaren zenbakia:
+			<div><input type="number" name="zenb" id="zenb" placeholder="1" />
+			<button type="submit">Ezabatu</button>
 		</form>
 	</center>
 	<span><a href='layout.html'><img src="http://www.freeiconspng.com/uploads/icones-png-theme-home-19.png" alt="atzera" width="50" height="50" align="left"></a></span>	

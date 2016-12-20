@@ -18,7 +18,7 @@
 	
 
 	$niremysql = new mysqli("localhost","root","","album");
-	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");	
+	$niremysql = new mysqli("mysql.hostinger.es","u642730790_tol","joantol","u642730790_album");
 		
 	if($niremysql->connect_errno) {
 		die( "Konexioan errorea gertatu da: (". 

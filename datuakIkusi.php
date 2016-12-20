@@ -17,8 +17,8 @@
 <?php 
 
 	session_start();
-	$niremysql = new mysqli("localhost","root","","album");
-	//$niremysql = new mysqli("mysql.hostinger.es","u980005360_tol","joantol","u980005360_quiz");
+	//$niremysql = new mysqli("localhost","root","","album");
+	$niremysql = new mysqli("mysql.hostinger.es","u642730790_tol","joantol","u642730790_album");
 	
 	if ($niremysql->connect_error) {
 		printf("Konexio errorea: " . $niremysql->connect_error);
@@ -48,7 +48,7 @@
 	$numrows = mysqli_num_rows($argazkiak);
 	if($numrows > 0){
 		
-		echo "<h1> Galderen zerrenda </h1>";		
+		echo "<h1> Argazkien zerrenda </h1>";		
 		echo "
 		<table border=1>
 			<tr>
